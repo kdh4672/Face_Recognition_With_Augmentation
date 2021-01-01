@@ -15,6 +15,13 @@ class DepthNetGAN_M(DepthNetGAN):
                         train,
                         **kwargs):
         """Train the network on a single example"""
+##kdkd
+        np.save("/home/daehyeon/kong/DepthNets/pipeline/depth_pred_wb.npy",z_keypts_src)
+        print("here!!")
+        print(z_keypt_src)
+##kdkd
+
+
         is_gan = not self.no_gan
         if train:
             self.optim['g'].zero_grad()

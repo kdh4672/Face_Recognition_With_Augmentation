@@ -673,7 +673,8 @@ def warp_to_target_face(net,
                         output_size='tgt',
                         kpt_file_separator=",",
                         basename_prefix='src',
-                        save_plots=False):
+                        save_plots=False,
+                        save_depth_path=None):
     """
     Warp a source face to a target face.
 
@@ -721,6 +722,12 @@ def warp_to_target_face(net,
                     kpt_file_separator=kpt_file_separator)
     src_kpts = dd['src_kpts']
     tgt_kpts = dd['tgt_kpts']
+    ##kdkd
+    if src_kpts.shape[0] == 68:
+        src_kpts = np.delete(src_kpts,[64,66],axis=0)
+    if tgt_kpts.shape[0] == 68:
+        tgt_kpts = np.delete(tgt_kpts,[64,66],axis=0)
+    ##kdkd
     src_depth = dd['src_depth']
     if src_depth is None:
         src_depth = np.zeros((66,))
@@ -773,7 +780,8 @@ def warp_to_target_face(net,
                                           use_gt_z=False)
 
     pred_depths = outputs['src_z_pred'].cpu().numpy().flatten()
-    
+    if save_depth_path is not None:
+        np.save(save_depth_path+"/depth.npy",pred_depths)
     #print("pred depths shape", pred_depths.shape)
     #print("pred depths min / max", pred_depths.min(), pred_depths.max())
     pred_affine = outputs['affine'][0].cpu().numpy()

@@ -29,6 +29,7 @@ def parse_args():
     parser.add_argument('--learn_m', action='store_true')
     parser.add_argument('--network', type=str, required=True)
     parser.add_argument('--cpu', action='store_true')
+    parser.add_argument('--save_depth_path',type=str,required=False)
     args = parser.parse_args()
     return args    
 
@@ -66,4 +67,5 @@ warp_to_target_face(net,
                     output_size=output_size,
                     kpt_file_separator=args.kpt_file_separator,
                     basename_prefix='tgt',
-                    save_plots=True)
+                    save_plots=False,
+                    save_depth_path=args.save_depth_path)
